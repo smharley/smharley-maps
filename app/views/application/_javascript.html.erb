@@ -1,0 +1,14 @@
+<%= javascript_include_tag  "leaflet-mapbox-gl.js" %>
+<%= javascript_include_tag  "leaflet.markercluster.js" %>
+<%= javascript_include_tag :application %>
+
+<%= yield :javascript %>
+
+<%= render "analytics" %>
+
+<% if Rails.env.test? %>
+  <%= javascript_tag do %>
+    $.fx.off = true;
+    $.ajaxSetup({ async: false });
+  <% end %>
+<% end %>
