@@ -1,43 +1,59 @@
-.menu-ui {
-  background:#fff;
-  position:absolute;
-  top:10px;right:10px;
-  z-index:1;
-  border-radius:3px;
-  width:120px;
-  border:1px solid rgba(0,0,0,0.4);
+.layer-menu {
+  background: #fff;
+  border-radius: $base-border-radius;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+  position: absolute;
+  right: 1em;
+  top: calc(#{$header-height} + 10px);
+  width: 8em;
+  z-index: 100;
 }
 
-.menu-ui a {
-  font-size:13px;
-  color:#404040;
-  display:block;
-  margin:0;padding:0;
-  padding:10px;
-  text-decoration:none;
-  border-bottom:1px solid rgba(0,0,0,0.25);
-  text-align:center;
+.layer-menu-link {
+  color: #404040;
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  margin: 0;
+  padding: 0.625em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  &:hover {
+    background: #f8f8f8;
+    color: #404040;
+  }
+
+  + .layer-menu-input {
+    background: tint($light-gray, 65%);
+    height: 0;
+    overflow: hidden;
+    transition: height 0.2s $ease-out-quint;
+  }
+
+  &.active {
+    background: #48cfad;
+    color: #fff;
+
+    &:hover {
+      background: #37bc9b;
+    }
+
+    + .layer-menu-input {
+      height: 32px;
+      padding: 7px 6px 6px;
+    }
+  }
 }
 
-.menu-ui a:first-child {
-  border-radius:3px 3px 0 0;
-}
+.layer-menu-item {
+  &:first-child {
+    border-bottom: $base-border;
+    border-radius: $base-border-radius $base-border-radius 0 0;
+  }
 
-.menu-ui a:last-child {
-  border:none;
-  border-radius:0 0 3px 3px;
-}
-
-.menu-ui a:hover {
-  background:#f8f8f8;
-  color:#404040;
-}
-
-.menu-ui a.active {
-  background:#3887BE;
-  color:#FFF;
-}
-
-.menu-ui a.active:hover {
-  background:#3074a4;
+  &:last-child {
+    border-radius: 0 0 $base-border-radius $base-border-radius;
+  }
 }

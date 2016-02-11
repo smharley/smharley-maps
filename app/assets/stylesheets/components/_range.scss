@@ -1,0 +1,97 @@
+// Styling Cross-Browser Compatible Range Inputs with Sass
+// Github: https://github.com/darlanrod/input-range-sass
+// Author: Darlan Rod https://github.com/darlanrod
+// Version 1.0.1
+// MIT License
+
+$track-color: #ddd;
+$thumb-color: #fff;
+
+$thumb-radius: 6px;
+$thumb-height: 12px;
+$thumb-width: 12px;
+$thumb-border-width: 1px;
+$thumb-border-color: #aaa;
+
+$track-width: 100%;
+$track-height: 6px;
+
+$contrast: 5%;
+
+@mixin track() {
+  cursor: pointer;
+  height: $track-height;
+  transition: all 0.2s ease;
+  width: $track-width;
+}
+
+@mixin thumb() {
+  background: $thumb-color;
+  border-radius: $thumb-radius;
+  border: $thumb-border-width solid $thumb-border-color;
+  cursor: pointer;
+  height: $thumb-height;
+  width: $thumb-width;
+}
+
+[type=range] {
+  -webkit-appearance: none;
+  margin: $thumb-height / 2 0;
+  width: $track-width;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::-webkit-slider-runnable-track {
+    @include track();
+    background: $track-color;
+    border-radius: 2px;
+  }
+
+  &::-webkit-slider-thumb {
+    @include thumb();
+    -webkit-appearance: none;
+    margin-top: ($track-height / 2) - ($thumb-height / 2);
+  }
+
+  &::-moz-range-track {
+    @include track();
+    background: $track-color;
+    border-radius: 2px;
+  }
+
+  &::-moz-range-thumb {
+    @include thumb();
+  }
+
+  &::-ms-track {
+    @include track();
+    background: transparent;
+    border-color: transparent;
+    border-width: $thumb-width 0;
+    color: transparent;
+  }
+
+  &::-ms-fill-lower {
+    background: darken($track-color, $contrast);
+    border-radius: 2px * 2;
+  }
+
+  &::-ms-fill-upper {
+    background: $track-color;
+    border-radius: 2px * 2;
+  }
+
+  &::-ms-thumb {
+    @include thumb();
+  }
+
+  &:focus::-ms-fill-lower {
+    background: $track-color;
+  }
+
+  &:focus::-ms-fill-upper {
+    background: lighten($track-color, $contrast);
+  }
+}

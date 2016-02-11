@@ -57,7 +57,7 @@ var mapApp = (function($, window, document, undefined) {
         }
       },
       createMap: function(geojson) {
-        var $layers = $(".menu-ui");
+        var $layers = $(".layer-menu");
         var gl = L.mapboxGL({
           accessToken: TOKEN,
           style: 'mapbox://styles/smharley/cikeotfx300df9um5097xjeer'
@@ -71,9 +71,9 @@ var mapApp = (function($, window, document, undefined) {
         })
 
         var container = document.createElement("div");
-            container.className = "container";
+            container.className = "layer-menu-items";
         $layers.append(container);
-        var $container = $(".container");
+        var $container = $(".layer-menu-items");
         addLayer(usgs, "USGS");
         addLayer(slope, 'Slope');
 
@@ -81,30 +81,36 @@ var mapApp = (function($, window, document, undefined) {
           // Create a simple layer switcher that
           // toggles layers on and off.
           useName = name.toLowerCase();
-          $container.append("<a href='#' id='" + useName + "'>" + name + "</a>");
-          $container.find("#" + useName).attr("data-name", useName);
-          $container.append("<input id='slide-" + useName +"' type='range' min='0' max='1' step='0.1' value='0.5' onchange='mapApp.util.updateOpacity(this.id, this.value)'>");
+          item = document.createElement("div");
+          item.className = "layer-menu-item layer-menu-item--" + useName;
+          $container.append(item);
 
-          var $link = $(".container").find("[data-name=" + useName + "]");
+          var $item = $container.find(".layer-menu-item--" + useName);
+
+          $item.append("<a href='#' class='layer-menu-link' id='" + useName + "'>" + name + "</a>");
+          $item.find("#" + useName).attr("data-name", useName);
+          $item.append("<div class='layer-menu-input'><input id='slide-" + useName +"' type='range' min='0' max='1' step='0.1' value='0.5' onchange='mapApp.util.updateOpacity(this.id, this.value)'></div>");
+
+          var $link = $container.find("[data-name=" + useName + "]");
           $link.on("click", function(e) {
             e.preventDefault();
             e.stopPropagation();
 
             if ($(this).data("name") == "slope") {
               if (map.hasLayer(slope)) {
-                this.className = '';
+                this.className = 'layer-menu-link';
                 map.removeLayer(slope);
               } else {
                 map.addLayer(slope);
-                this.className = 'active';
+                this.className = 'layer-menu-link active';
               }
             } else if ($(this).data("name") == "usgs") {
               if (map.hasLayer(usgs)) {
                 map.removeLayer(usgs);
-                this.className = '';
+                this.className = 'layer-menu-link';
               } else {
                 map.addLayer(usgs);
-                this.className = 'active';
+                this.className = 'layer-menu-link active';
               }
             }
           });
@@ -134,11 +140,6 @@ var mapApp = (function($, window, document, undefined) {
             return L.marker(latlng, {icon: pointIcon});
           }
         });
-
-        // Opacity Slider
-        var opacitySlider = new L.Control.opacitySlider();
-        map.addControl(opacitySlider);
-        opacitySlider.setOpacityLayer(slope);
 
         // Mouse Coordinate display
         L.control.coordinates({
