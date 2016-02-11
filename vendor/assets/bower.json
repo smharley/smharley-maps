@@ -1,0 +1,7 @@
+{
+  "name": "dsl-generated dependencies",
+  "dependencies": {
+    "jquery-ui": "latest",
+    "Leaflet.Coordinates": "latest"
+  }
+}

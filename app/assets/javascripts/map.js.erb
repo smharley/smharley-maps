@@ -1,0 +1,74 @@
+// $(document).ready(function(){
+//   var token = 'pk.eyJ1Ijoic21oYXJsZXkiLCJhIjoiZGJmNDNlODM0MDEyZjRhZDUzNDY0MWI5ZDM3ZGYwMGMifQ.83BsDK5EYkcPnU8SogikqA';
+//
+//   var markers;
+//
+//   $.ajax({
+//     url: '/places.json',
+//     dataType: 'text',
+//     success: function(data) {
+//       geojson = $.parseJSON(data)
+//       createMap(geojson);
+//     }
+//   });
+//
+//   function createMap(geojson) {
+//     var map = L.map("map", {
+//       center: [39.3185, -119.9214],
+//       maxZoom: 16,
+//       zoom: 12,
+//     })
+//
+//     var gl = L.mapboxGL({
+//         accessToken: token,
+//         style: 'mapbox://styles/smharley/cikeotfx300df9um5097xjeer'
+//     }).addTo(map);
+//
+//     var markers = L.markerClusterGroup();
+//
+//     var pointIcon = L.icon({
+//         iconUrl: "<%= asset_path 'point.png' %>",
+//         iconSize: [22, 32],
+//         popupAnchor: [0, -14]
+//     });
+//
+//     var customOptions = {
+//       "className": "leaflet-popup--custom"
+//     };
+//
+//     var geoJsonLayer = L.geoJson(geojson, {
+//       onEachFeature: function (feature, layer) {
+//         var customPopup = "<div class='pop'><a href='/places/" +
+//                           feature.properties.href + "'>" +
+//                           "<h2>" + feature.properties.name + "</h2></a></div>";
+//         layer.bindPopup(customPopup, customOptions);
+//       },
+//       pointToLayer: function (feature, latlng) {
+//         return L.marker(latlng, {icon: pointIcon});
+//       }
+//     });
+//
+//     var url = "http://s3-us-west-1.amazonaws.com/ctslope/relief/{z}/{x}/{y}.png?v=1";
+//     var slope = L.tileLayer(url, {
+//       attribution: "USGS map from <a href='http://caltopo.com/'>CalTopo</a>",
+//       minZoom: 5,
+//       maxZoom: 18,
+//       maxNativeZoom: 14,
+//       opacity: 0.25
+//     }).addTo(map);
+//
+//     var opacitySlider = new L.Control.opacitySlider();
+//     map.addControl(opacitySlider);
+//     opacitySlider.setOpacityLayer(slope);
+//
+//     L.control.coordinates({
+//       labelTemplateLat:"{y}, ",
+//       labelTemplateLng:"{x}",
+//       useLatLngOrder: true,
+//     }).addTo(map);
+//
+//     markers.addLayer(geoJsonLayer);
+//     map.addLayer(markers);
+//     map.fitBounds(markers.getBounds());
+//   }
+// });

@@ -1,0 +1,85 @@
+.ui-slider {
+  background: $base-border-color;
+  position: relative;
+  text-align: left;
+
+  .ui-slider-handle {
+    background: #fff;
+    border: 1px solid $base-border-color;
+    border-radius: 2px;
+    cursor: grab;
+    height: 1.2em;
+    position: absolute;
+    touch-action: none;
+    width: 16px;
+    z-index: 2;
+
+    &.ui-state-active {
+      cursor: move;
+      cursor: -webkit-grabbing;
+      cursor:    -moz-grabbing;
+    }
+  }
+
+  .ui-slider-range {
+    background-color: darken($base-border-color, 25%);
+    background-position: 0 0;
+    border: 0;
+    display: block;
+    font-size: 0.7em;
+    position: absolute;
+    z-index: 1;
+  }
+}
+
+// support: IE8 - See #6727
+.ui-slider.ui-state-disabled .ui-slider-handle,
+.ui-slider.ui-state-disabled .ui-slider-range {
+  filter: inherit;
+}
+
+.ui-slider-horizontal {
+  height: 0.8em;
+
+  .ui-slider-handle {
+    margin-left: -3px;
+    top: -0.3em;
+  }
+
+  .ui-slider-range {
+    height: 100%;
+    top: 0;
+  }
+
+  .ui-slider-range-min {
+    left: 0;
+  }
+
+  .ui-slider-range-max {
+    right: 0;
+  }
+}
+
+.ui-slider-vertical {
+  height: 100px;
+  width: 0.8em;
+
+  .ui-slider-handle {
+    left: -0.3em;
+    margin-bottom: -0.6em;
+    margin-left: 0;
+  }
+
+  .ui-slider-range {
+    left: 0;
+    width: 100%;
+  }
+
+  .ui-slider-range-min {
+    bottom: 0;
+  }
+
+  .ui-slider-range-max {
+    top: 0;
+  }
+}

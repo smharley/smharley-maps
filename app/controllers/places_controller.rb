@@ -4,7 +4,27 @@ class PlacesController < ApplicationController
   # GET /places
   def index
     @places = Place.all
-    render json: @places
+    @geojson = Array.new
+
+    @places.each do |place|
+      @geojson << {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [place.lng, place.lat]
+        },
+        properties: {
+          name: place.name,
+          address: place.name,
+          href: place.id,
+        }
+      }
+    end
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @geojson }
+    end
   end
 
   # GET /places/1
@@ -25,7 +45,7 @@ class PlacesController < ApplicationController
     @place = Place.new(place_params)
 
     if @place.save
-      redirect_to @place, notice: 'Place was successfully created.'
+      redirect_to new_place_path, notice: 'Place was successfully created.'
     else
       render :new
     end
