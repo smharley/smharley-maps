@@ -1,5 +1,5 @@
 // Typography
-$base-font-family: $helvetica;
+$base-font-family: "Fira Sans", $helvetica;
 $heading-font-family: $base-font-family;
 
 // Font Sizes
@@ -39,7 +39,8 @@ $form-box-shadow-focus: $form-box-shadow, 0 0 5px adjust-color($action-color, $l
 
 // Animations
 $base-duration: 150ms;
-$base-timing: ease;
+$base-timing: $ease-out-quint;
+$base-transition: all $base-duration $base-timing;
 
 //
 $header-height: 3.5rem;

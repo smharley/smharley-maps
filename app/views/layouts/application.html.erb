@@ -18,15 +18,26 @@
   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
   <!-- Mapbox GL -->
-  <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.11.2/mapbox-gl.css" rel='stylesheet' />
+  <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.11.2/mapbox-gl.css" rel="stylesheet" />
   <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.11.2/mapbox-gl.js"></script>
+
+  <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,300,400italic,700" rel="stylesheet" type="text/css" />
 </head>
 <body class="<%= body_class %>">
   <header class="header">
-    <h1 class="header-logo">Backcountry Ski Guide</h1>
+    <div class="header-menu">
+      <a href="#" class="header-menu-icon">
+        <%= image_tag "menu@2x.png", class: "header-menu-icon-image" %>
+      </a>
+      <h1 class="header-logo">Backcountry Ski Guide</h1>
+    </div>
     <nav class="header-nav">
       <a href="" class="header-nav-link">About</a>
       <a href="" class="header-nav-link">Login</a>
+      <a href="" class="header-nav-button">
+        <%= inline_svg "layers.svg", class: "header-nav-button-icon" %>
+        Layers
+      </a>
     </nav>
   </header>
   <%= render "flashes" -%>

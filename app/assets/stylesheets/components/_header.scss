@@ -1,9 +1,102 @@
 .header {
+  background: #4fbcff;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
   display: flex;
   height: $header-height;
   justify-content: space-between;
+  position: relative;
+  z-index: 100;
 }
 
 .header-nav {
+  margin: auto 0;
+}
 
+.header-nav-button {
+  border: 1px solid #c5e9ff;
+  border-radius: $base-border-radius;
+  color: #c5e9ff;
+  font-size: 0.875rem;
+  letter-spacing: 0.1rem;
+  padding: ($base-spacing * 0.25) ($base-spacing * 0.5) 4px;
+  text-transform: uppercase;
+  transition: $base-transition;
+
+  &:hover,
+  &:not(.header-nav-button--active):focus {
+    border-color: #fff;
+    color: #fff;
+  }
+
+  &:last-child {
+    margin-right: 1rem;
+  }
+
+  &--active {
+    background-color: #fff;
+    border-color: #fff;
+    color: darken(#4fbcff, 33%);
+
+    &:hover {
+      color: darken(#4fbcff, 50%);
+    }
+
+    g {
+      fill: darken(#4fbcff, 33%);
+    }
+  }
+}
+
+.header-nav-button-icon {
+  @include position(5px null null);
+  @include size(20px);
+  margin-right: $base-spacing * 0.25;
+  opacity: 0.75;
+  transition: $base-transition;
+
+  g {
+    transition: $base-transition;
+  }
+
+  .header-nav-button:hover & {
+    opacity: 1;
+  }
+}
+
+.header-nav-link {
+  color: #c5e9ff;
+  font-size: 0.875rem;
+  letter-spacing: 0.1rem;
+  margin-right: $base-spacing;
+  text-transform: uppercase;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+.header-menu {
+  display: flex;
+}
+
+.header-menu-icon {
+  @include size(72px 56px);
+  opacity: 0.75;
+  padding: 16px 24px;
+  user-select: none;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.header-menu-icon-image {
+  @include size(24px);
+}
+
+.header-logo {
+  @include position(1px null null);
+  color: #fff;
+  font-weight: 300;
+  margin: auto 0;
 }
