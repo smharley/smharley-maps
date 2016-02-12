@@ -57,7 +57,7 @@ var mapApp = (function($, window, document, undefined) {
         }
       },
       createMap: function(geojson) {
-        var $layers = $(".layer-menu");
+        var $layers = $(".layer-nav");
         var gl = L.mapboxGL({
           accessToken: TOKEN,
           style: 'mapbox://styles/smharley/cikeotfx300df9um5097xjeer'
@@ -71,9 +71,9 @@ var mapApp = (function($, window, document, undefined) {
         })
 
         var container = document.createElement("div");
-            container.className = "layer-menu-items";
+            container.className = "layer-nav-items";
         $layers.append(container);
-        var $container = $(".layer-menu-items");
+        var $container = $(".layer-nav-items");
         addLayer(usgs, "USGS");
         addLayer(slope, 'Slope');
 
@@ -82,14 +82,14 @@ var mapApp = (function($, window, document, undefined) {
           // toggles layers on and off.
           useName = name.toLowerCase();
           item = document.createElement("div");
-          item.className = "layer-menu-item layer-menu-item--" + useName;
+          item.className = "layer-nav-item layer-nav-item--" + useName;
           $container.append(item);
 
-          var $item = $container.find(".layer-menu-item--" + useName);
+          var $item = $container.find(".layer-nav-item--" + useName);
 
-          $item.append("<a href='#' class='layer-menu-link' id='" + useName + "'>" + name + "</a>");
+          $item.append("<a href='#' class='layer-nav-link' id='" + useName + "'>" + name + "</a>");
           $item.find("#" + useName).attr("data-name", useName);
-          $item.append("<div class='layer-menu-input'><input id='slide-" + useName +"' type='range' min='0' max='1' step='0.1' value='0.5' onchange='mapApp.util.updateOpacity(this.id, this.value)'></div>");
+          $item.append("<div class='layer-nav-input'><input id='slide-" + useName +"' type='range' min='0' max='1' step='0.1' value='0.5' onchange='mapApp.util.updateOpacity(this.id, this.value)'></div>");
 
           var $link = $container.find("[data-name=" + useName + "]");
           $link.on("click", function(e) {
@@ -98,19 +98,19 @@ var mapApp = (function($, window, document, undefined) {
 
             if ($(this).data("name") == "slope") {
               if (map.hasLayer(slope)) {
-                this.className = 'layer-menu-link';
+                this.className = 'layer-nav-link';
                 map.removeLayer(slope);
               } else {
                 map.addLayer(slope);
-                this.className = 'layer-menu-link active';
+                this.className = 'layer-nav-link active';
               }
             } else if ($(this).data("name") == "usgs") {
               if (map.hasLayer(usgs)) {
                 map.removeLayer(usgs);
-                this.className = 'layer-menu-link';
+                this.className = 'layer-nav-link';
               } else {
                 map.addLayer(usgs);
-                this.className = 'layer-menu-link active';
+                this.className = 'layer-nav-link active';
               }
             }
           });

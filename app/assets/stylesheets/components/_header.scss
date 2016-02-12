@@ -10,39 +10,32 @@
 
 .header-nav {
   margin: auto 0;
+  padding-right: 30px;
 }
 
 .header-nav-button {
-  border: 1px solid #c5e9ff;
-  border-radius: $base-border-radius;
-  color: #c5e9ff;
-  font-size: 0.875rem;
-  letter-spacing: 0.1rem;
-  padding: ($base-spacing * 0.25) ($base-spacing * 0.5) 4px;
-  text-transform: uppercase;
-  transition: $base-transition;
+  @include size(20px);
+  margin: auto 0 auto $base-spacing;
+  position: relative;
+
+  &::before {
+    @include position(absolute, -4px -6px -3px);
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 50%;
+    content: "";
+    transition: $base-transition;
+  }
 
   &:hover,
-  &:not(.header-nav-button--active):focus {
-    border-color: #fff;
-    color: #fff;
-  }
-
-  &:last-child {
-    margin-right: 1rem;
-  }
-
   &--active {
-    background-color: #fff;
-    border-color: #fff;
-    color: darken(#4fbcff, 33%);
-
-    &:hover {
-      color: darken(#4fbcff, 50%);
+    &::before {
+      background-color: rgba(0, 0, 0, 0.2);
     }
+  }
 
-    g {
-      fill: darken(#4fbcff, 33%);
+  &--about {
+    &::before {
+      @include position(absolute, -4px -2px -3px -6px);
     }
   }
 }
@@ -50,15 +43,10 @@
 .header-nav-button-icon {
   @include position(5px null null);
   @include size(20px);
-  margin-right: $base-spacing * 0.25;
   opacity: 0.75;
   transition: $base-transition;
 
-  g {
-    transition: $base-transition;
-  }
-
-  .header-nav-button:hover & {
+  .header-nav-button--active & {
     opacity: 1;
   }
 }
@@ -80,9 +68,9 @@
 }
 
 .header-menu-icon {
-  @include size(72px 56px);
+  @include size(78px 56px);
   opacity: 0.75;
-  padding: 16px 24px;
+  padding: 16px 24px 16px 30px;
   user-select: none;
 
   &:hover {
