@@ -1,12 +1,4 @@
 MapApp.util = {
-  updateOpacity: function(name, value) {
-    layer = name.split('-')[1].toLowerCase();
-    if (layer == "slope") {
-      slope.setOpacity(value);
-    } else if (layer == "usgs") {
-      usgs.setOpacity(value);
-    }
-  },
   createMap: function(geojson, mapboxToken) {
     var gl = L.mapboxGL({
       accessToken: mapboxToken,
@@ -40,14 +32,14 @@ MapApp.util = {
       zoom: 2,
     })
 
-    MapApp.util.addLayer(usgs, "USGS");
-    MapApp.util.addLayer(slope, 'Slope');
+    MapApp.util.addLayer(slope, "Slope", map);
+    MapApp.util.addLayer(usgs, "USGS", map);
 
     // GeoJSON data, popups, and point icons
     var pointIcon = L.icon({
       iconUrl: "<%= asset_path 'marker.svg' %>",
-        iconSize: [27, 27],
-        popupAnchor: [0, -14]
+      iconSize: [27, 27],
+      popupAnchor: [0, -14]
     });
 
     var customOptions = {
@@ -57,14 +49,14 @@ MapApp.util = {
     var geoJsonLayer = L.geoJson(geojson, {
       onEachFeature: function (feature, layer) {
         var customPopup = "<div class='pop'><a href='/places/" +
-      feature.properties.href + "'>" +
-      "<h2>" + feature.properties.name +
-      "</h2></a></div>";
-    layer.bindPopup(customPopup, customOptions);
+        feature.properties.href + "'>" +
+        "<h2>" + feature.properties.name +
+        "</h2></a></div>";
+        layer.bindPopup(customPopup, customOptions);
       },
-        pointToLayer: function (feature, latlng) {
-          return L.marker(latlng, {icon: pointIcon});
-        }
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {icon: pointIcon});
+      }
     });
 
     // Mouse Coordinate display
@@ -83,44 +75,31 @@ MapApp.util = {
     var bounds = markers.getBounds();
     map.fitBounds(bounds);
   },
-  addLayer: function (layer, name, zIndex) {
-    // Create a simple layer switcher that
-    // toggles layers on and off.
-    var $layers = $(".layer-nav");
-    var container = document.createElement("div");
-    container.className = "layer-nav-items";
-    $layers.append(container);
+  addLayer: function (layer, name, map) {
     var $container = $(".layer-nav-items");
-    useName = name.toLowerCase();
-    item = document.createElement("div");
-    item.className = "layer-nav-item layer-nav-item--" + useName;
-    $container.append(item);
+    var useName = name.toLowerCase();
+    var $item = $("<div>").addClass("layer-nav-item layer-nav-item--" + useName);
+    $container.append($item);
 
-    var $item = $container.find(".layer-nav-item--" + useName);
+    var $link = $("<a href='#'>").text(name).addClass("layer-nav-link").
+      data("name", useName);
+    $item.append($link);
+    var $div = $("<div class='layer-nav-input'>");
+    var $input = $("<input id='slide-" + useName +"' type='range' min='0' max='1' step='0.1' value='0.5' />");
+    $input.change(function(){ layer.setOpacity(this.value); });
+    $div.append($input);
+    $item.append($div);
 
-    $item.append("<a href='#' class='layer-nav-link' id='" + useName + "'>" + name + "</a>");
-    $item.find("#" + useName).attr("data-name", useName);
-    $item.append("<div class='layer-nav-input'><input id='slide-" + useName +"' type='range' min='0' max='1' step='0.1' value='0.5' onchange='mapApp.util.updateOpacity(this.id, this.value)'></div>");
-
-    var $link = $container.find("[data-name=" + useName + "]");
     $link.on("click", function(e) {
       e.preventDefault();
       e.stopPropagation();
 
-      if ($(this).data("name") == "slope") {
-        if (map.hasLayer(slope)) {
+      if ($(this).data("name") == useName) {
+        if (map.hasLayer(layer)) {
           this.className = 'layer-nav-link';
-          map.removeLayer(slope);
+          map.removeLayer(layer);
         } else {
-          map.addLayer(slope);
-          this.className = 'layer-nav-link active';
-        }
-      } else if ($(this).data("name") == "usgs") {
-        if (map.hasLayer(usgs)) {
-          map.removeLayer(usgs);
-          this.className = 'layer-nav-link';
-        } else {
-          map.addLayer(usgs);
+          map.addLayer(layer);
           this.className = 'layer-nav-link active';
         }
       }
