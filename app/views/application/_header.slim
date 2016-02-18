@@ -1,0 +1,11 @@
+header.header
+  .header-menu
+    a.header-menu-icon[href="#"]
+      = image_tag "menu@2x.png", class: "header-menu-icon-image"
+    h1.header-logo
+      | Maps
+  nav.header-nav
+    a.header-nav-button.header-nav-button--about[href=""]
+      = inline_svg "about.svg", class: "header-nav-button-icon"
+    a.header-nav-button[href="#" data-layer-nav-trigger=""]
+      = inline_svg "layers.svg", class: "header-nav-button-icon"
