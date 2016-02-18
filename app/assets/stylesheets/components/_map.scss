@@ -8,3 +8,22 @@
 .mapboxgl-canvas {
   left: 0;
 }
+
+.marker-cluster {
+  &-medium,
+  &-large,
+  &-small {
+    background-color: rgba(#7a51e1, 0.45);
+    box-shadow: inset 0 0 0 2px rgba(#7a51e1, 0.3);
+
+    div {
+      background: none;
+
+      span {
+        color: white;
+        font-weight: bold;
+        text-shadow: 1px 1px 0 rgba(black, 0.15);
+      }
+    }
+  }
+}
